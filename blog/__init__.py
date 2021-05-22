@@ -12,5 +12,13 @@ migrate = Migrate(app, db)
 from blog import routes, models
 
 
+@app.shell_context_processor
+def make_shell_context():
+  return {
+      "db": db,
+      "Entry": models.Entry
+  }
+
+
 if __name__ == "__main__":
     app.run(debug=True)
