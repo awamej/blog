@@ -1,1 +1,1 @@
-FLASK_APP=blogf
+FLASK_APP=blog
