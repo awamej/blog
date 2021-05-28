@@ -1,1 +1,1 @@
-set FLASK_APP=blog
+FLASK_APP=blog
