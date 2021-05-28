@@ -116,3 +116,18 @@ def logout():
 def list_drafts():
     drafts = Entry.query.filter_by(is_published=False).order_by(Entry.pub_date.desc())
     return render_template("drafts.html", drafts=drafts)
+
+
+@app.route('/delete-post/<int:entry_id>', methods=['POST'])
+@login_required
+def delete_entry(entry_id):
+    entry = Entry.query.filter_by(id=entry_id).first_or_404()
+    next_url = request.args.get('next')
+    # errors = None
+    if request.method == 'POST':
+        if entry_id in Entry.id:
+            db.session.delete(entry)
+            db.session.commit()
+        # else:
+        #     errors = form.errors
+    return redirect(next_url or url_for('index'))
