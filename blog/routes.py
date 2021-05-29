@@ -1,13 +1,15 @@
 from flask import render_template, request, session, flash, redirect, url_for
+from sqlalchemy import or_
+
 from blog import app
 from blog.models import Entry, db
 from blog.forms import EntryForm, LoginForm
 import functools
 
 
-def create_or_edit_entry(*entry_id):
+def create_or_edit_entry(entry_id=None):
     errors = None
-    if entry_id is int:
+    if isinstance(entry_id, int):
         entry = Entry.query.filter_by(id=entry_id).first_or_404()
         form = EntryForm(obj=entry)
     else:
@@ -24,9 +26,11 @@ def create_or_edit_entry(*entry_id):
             else:
                 db.session.add(entry)
             db.session.commit()
+            flash('Post dodany', 'success')
+            return redirect(url_for('index'))
         else:
             errors = form.errors
-        return render_template("entry_form.html", form=form, errors=errors)
+    return render_template("entry_form.html", form=form, errors=errors)
 
 
 def login_required(view_func):
@@ -41,7 +45,11 @@ def login_required(view_func):
 
 @app.route("/")
 def index():
-    all_posts = Entry.query.filter_by(is_published=True).order_by(Entry.pub_date.desc())
+    search = request.args.get('search', default=None)
+    query = Entry.query.filter_by(is_published=True)
+    if search:
+        query = query.filter(or_(Entry.title.contains(search), Entry.body.contains(search)))
+    all_posts = query.order_by(Entry.pub_date.desc())
     return render_template("homepage.html", all_posts=all_posts)
 
 

@@ -22,8 +22,8 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Szukaj" aria-label="Szukaj">
+            <form class="form-inline my-2 my-lg-0" action="{{ url_for('index') }}" method="GET">
+                <input class="form-control mr-sm-2" type="text" name="search" placeholder="Szukaj" aria-label="Szukaj">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Szukaj</button>
             </form>
         </div>
@@ -33,6 +33,11 @@
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit"><a href="/new-post/" style="text-decoration: none; color: white">Dodaj nowy wpis</a></button>
         </div>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault2">
+                <ul class="navbar-nav ml-auto">
+                </ul>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit"><a href="/drafts/" style="text-decoration: none; color: white">Szkice</a></button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault3">
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 {% if session.logged_in %}

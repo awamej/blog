@@ -26,7 +26,7 @@
        </td>
        <td>{{ post.body|truncate(100, true) }}</td>
         <td>
-            <button class="btn btn-danger my-2 my-sm-0" type="submit"><a href="/" style="text-decoration: none; color: white">Usuń</a></button>
+            <button class="btn btn-danger my-2 my-sm-0" type="submit"><a href="{{ url_for('delete_entry', entry_id=post.id) }}" style="text-decoration: none; color: white">Usuń</a></button>
         </td>
      </tr>
      {% endfor %}
