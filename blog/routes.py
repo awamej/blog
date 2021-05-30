@@ -21,7 +21,7 @@ def create_or_edit_entry(entry_id=None):
         )
     if request.method == "POST":
         if form.validate_on_submit():
-            if entry_id is int:
+            if isinstance(entry_id, int):
                 form.populate_obj(entry)
             else:
                 db.session.add(entry)

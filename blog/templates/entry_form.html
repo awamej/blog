@@ -8,7 +8,11 @@
    Dodaj nowy wpis
 </h3>
 
+{% if 'new-post' in request.path %}
 <form action="/new-post" method="POST">
+{% else %}
+<form action="{{ request.path }}" method="POST">
+{% endif %}
   {{form.hidden_tag()}}
    <div class="form-group">
        <label for="title">Tytuł wpisu</label>
