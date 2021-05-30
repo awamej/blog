@@ -4,6 +4,16 @@
 
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
 <table class="table">
   <thead>
     <tr>
@@ -26,7 +36,9 @@
        </td>
        <td>{{ post.body|truncate(100, true) }}</td>
         <td>
-            <button class="btn btn-danger my-2 my-sm-0" type="submit"><a href="{{ url_for('delete_entry', entry_id=post.id) }}" style="text-decoration: none; color: white">Usuń</a></button>
+            <form action="{{ url_for('delete_entry', entry_id=post.id) }}" method="POST">
+            <button class="btn btn-danger my-2 my-sm-0" type="submit">Usuń</button>
+            </form>
         </td>
      </tr>
      {% endfor %}

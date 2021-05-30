@@ -130,12 +130,7 @@ def list_drafts():
 @login_required
 def delete_entry(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
-    next_url = request.args.get('next')
-    # errors = None
-    if request.method == 'POST':
-        if entry_id in Entry.id:
-            db.session.delete(entry)
-            db.session.commit()
-        # else:
-        #     errors = form.errors
-    return redirect(next_url or url_for('index'))
+    db.session.delete(entry)
+    db.session.commit()
+    flash('Szkic usunięty.', 'success')
+    return redirect(url_for('list_drafts'))
