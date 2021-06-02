@@ -30,7 +30,7 @@ def create_or_edit_entry(entry_id=None):
             return redirect(url_for('index'))
         else:
             errors = form.errors
-    return render_template("entry_form.html", form=form, errors=errors)
+    return render_template("entry_form.html", form=form, errors=errors, entry_id=entry_id)
 
 
 def login_required(view_func):
@@ -59,40 +59,10 @@ def create_entry():
     return create_or_edit_entry()
 
 
-# def create_entry():
-#     form = EntryForm()
-#     errors = None
-#     if request.method == "POST":
-#         if form.validate_on_submit():
-#             entry = Entry(
-#                 title=form.title.data,
-#                 body=form.body.data,
-#                 is_published=form.is_published.data
-#             )
-#             db.session.add(entry)
-#             db.session.commit()
-#         else:
-#             errors = form.errors
-#         return render_template("entry_form.html", form=form, errors=errors)
-
-
 @app.route("/edit-post/<int:entry_id>", methods=["GET", "POST"])
 @login_required
 def edit_entry(entry_id):
     return create_or_edit_entry(entry_id)
-
-
-# def edit_entry(entry_id):
-#     entry = Entry.query.filter_by(id=entry_id).first_or_404()
-#     form = EntryForm(obj=entry)
-#     errors = None
-#     if request.method == 'POST':
-#         if form.validate_on_submit():
-#             form.populate_obj(entry)
-#             db.session.commit()
-#         else:
-#             errors = form.errors
-#     return render_template("entry_form.html", form=form, errors=errors)
 
 
 @app.route("/login/", methods=['GET', 'POST'])
@@ -126,11 +96,21 @@ def list_drafts():
     return render_template("drafts.html", drafts=drafts)
 
 
-@app.route('/delete-post/<int:entry_id>', methods=['POST'])
+@app.route('/delete-draft/<int:entry_id>', methods=['POST'])
 @login_required
-def delete_entry(entry_id):
+def delete_draft(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
     db.session.delete(entry)
     db.session.commit()
     flash('Szkic usunięty.', 'success')
     return redirect(url_for('list_drafts'))
+
+
+@app.route('/delete-entry/<int:entry_id>', methods=['POST'])
+@login_required
+def delete_entry(entry_id):
+    entry = Entry.query.filter_by(id=entry_id).first_or_404()
+    db.session.delete(entry)
+    db.session.commit()
+    flash('Wpis usunięty.', 'success')
+    return redirect(url_for('index'))

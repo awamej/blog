@@ -5,7 +5,12 @@
 {% block content %}
 
 <h3>
-   Dodaj nowy wpis
+    {% if 'new-post' in request.path %}
+    Dodaj nowy wpis
+    {% else %}
+    Edytuj lub usuń wpis
+    {% endif %}
+
 </h3>
 
 {% if 'new-post' in request.path %}
@@ -28,6 +33,13 @@
    </div>
    <button type="submit" class="btn btn-primary mt-5">Zapisz</button>
 </form>
+
+    {% if 'edit-post' in request.path %}
+    <form action="{{ url_for('delete_entry', entry_id=entry_id) }}" method="POST">
+    <button class="btn btn-danger my-2 my-sm-0" type="submit">Usuń</button>
+    </form>
+    {% endif %}
+
 
 {% endblock %}
 </html>
