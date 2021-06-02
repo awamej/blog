@@ -17,7 +17,8 @@ def create_or_edit_entry(entry_id=None):
         entry = Entry(
             title=form.title.data,
             body=form.body.data,
-            is_published=form.is_published.data
+            is_published=form.is_published.data,
+            category=form.category.data
         )
     if request.method == "POST":
         if form.validate_on_submit():
