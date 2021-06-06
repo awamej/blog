@@ -50,11 +50,14 @@ def login_required(view_func):
 def index():
     search = request.args.get('search', default=None)
     category = request.args.get('category', default=None)
+    entry_id = request.args.get('entry_id', default=None)
     query = Entry.query.filter_by(is_published=True)
     if search:
         query = query.filter(or_(Entry.title.contains(search), Entry.body.contains(search)))
     elif category:
         query = query.filter(Entry.category == category)
+    elif entry_id:
+        query = query.filter(Entry.id == entry_id)
     all_posts = query.order_by(Entry.pub_date.desc())
     return render_template("homepage.html", all_posts=all_posts)
 
