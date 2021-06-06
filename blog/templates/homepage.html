@@ -38,15 +38,14 @@
         {{ post.body|truncate(700, true) }}
         {% endif %}
    </p>
-    {% if 'entry_id' in request.full_path %}
-    </div>
-    {% else %}
     <form class="form-inline my-2 my-lg-0" action="{{ url_for('index') }}" method="GET">
+    {% if 'entry_id' in request.full_path %}
+    <button class="btn btn-primary my-2 my-sm-0" type="submit">Wróć do strony głównej</button>
+    {% else %}
     <button class="btn btn-primary my-2 my-sm-0" name="entry_id" value="{{ post.id }}" type="submit">Czytaj dalej</button>
-    </form>
-    </div>
     {% endif %}
-
+    </form>
+</div>
 
 {% endfor %}
 
