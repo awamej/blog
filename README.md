@@ -21,4 +21,4 @@ To install the app use in terminal: pip install -r requirements.txt
 
 # How to run #
 
-To run the app use in terminal: python app.py
+To run the app use in terminal: flask run
