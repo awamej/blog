@@ -31,7 +31,7 @@
     <form class="form-inline my-2 my-lg-0" action="{{ url_for('index') }}" method="GET">
     <button class="btn btn-secondary my-2 my-sm-0 p-0" name="category" value="{{ post.category }}" type="submit">Kategoria: {{ post.category }}</button>
     </form>
-    <p>
+    <p style="text-align: justify">
         {% if 'entry_id' in request.full_path %}
         {{ post.body }}
         {% else %}
