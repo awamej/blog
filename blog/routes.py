@@ -24,10 +24,12 @@ def create_or_edit_entry(entry_id=None):
         if form.validate_on_submit():
             if isinstance(entry_id, int):
                 form.populate_obj(entry)
+                db.session.commit()
+                flash('Post wyedytowany', 'success')
             else:
                 db.session.add(entry)
-            db.session.commit()
-            flash('Post dodany', 'success')
+                db.session.commit()
+                flash('Post dodany', 'success')
             return redirect(url_for('index'))
         else:
             errors = form.errors
@@ -47,9 +49,12 @@ def login_required(view_func):
 @app.route("/")
 def index():
     search = request.args.get('search', default=None)
+    category = request.args.get('category', default=None)
     query = Entry.query.filter_by(is_published=True)
     if search:
         query = query.filter(or_(Entry.title.contains(search), Entry.body.contains(search)))
+    elif category:
+        query = query.filter(Entry.category == category)
     all_posts = query.order_by(Entry.pub_date.desc())
     return render_template("homepage.html", all_posts=all_posts)
 

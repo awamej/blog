@@ -27,8 +27,11 @@
          </svg>
        </a>
    </div>
-   <p>{{ post.pub_date.strftime('%Y-%m-%d') }} {{ post.category }}</p>
-   <p>
+   {{ post.pub_date.strftime('%Y-%m-%d') }}
+    <form class="form-inline my-2 my-lg-0" action="{{ url_for('index') }}" method="GET">
+    <button class="btn btn-secondary my-2 my-sm-0 p-0" name="category" value="{{ post.category }}" type="submit">Kategoria: {{ post.category }}</button>
+    </form>
+    <p>
        {{ post.body}}
    </p>
 </div>
