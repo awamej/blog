@@ -83,7 +83,7 @@ def login():
         if form.validate_on_submit():
             session['logged_in'] = True
             session.permanent = True  # Use cookie to store session.
-            flash('You are now logged in.', 'success')
+            flash('Zalogowano.', 'success')
             return redirect(next_url or url_for('index'))
         else:
             errors = form.errors
@@ -94,7 +94,7 @@ def login():
 def logout():
     if request.method == 'POST':
         session.clear()
-        flash('You are now logged out.', 'success')
+        flash('Wylogowano.', 'success')
     return redirect(url_for('index'))
 
 
